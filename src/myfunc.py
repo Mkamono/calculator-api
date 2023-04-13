@@ -9,6 +9,7 @@ def make_json_from_result(result):
     return jsonify({"formula": f"{result}",
                     "units": get_unit_list(result),
                     "all_units": get_all_unit_list(result),
+                    "error": ""
                     })
 
 
