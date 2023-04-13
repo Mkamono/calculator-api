@@ -1,19 +1,10 @@
-from flask import request, jsonify
-from pint import UnitRegistry
-from src import app
+from flask import request, Flask
 from src import myfunc
 import sys
 sys.dont_write_bytecode = True
 
-
-class resultinfo(UnitRegistry):
-    Latex_str: str
-    result: float
-    units: list[str]
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 
 @app.route('/', methods=["GET"])
@@ -35,3 +26,8 @@ def post_units():
     formula: str = request.form["formula"]
     result = myfunc.calc_quantity(formula, change_units)
     return myfunc.make_json_from_result(result)
+
+
+if __name__ == '__main__':
+
+    app.run(debug=True)

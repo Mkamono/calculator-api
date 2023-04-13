@@ -2,7 +2,7 @@
 name = "calculator-api"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Mkamono <chengyaye31@gmail.com>"]
 readme = "README.md"
 packages = [{include = "calculator_api"}]
 

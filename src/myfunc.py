@@ -1,27 +1,26 @@
+from flask import jsonify
 from pint import UnitRegistry
 ureg = UnitRegistry()
 ureg.default_format = "e~P"
-Q_ = ureg.Quantity
-
 superscripts = ["⁻", "⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
 
 
 def make_json_from_result(result):
-    return {"formula": f"{result}",
-            "units": get_unit_list(result),
-            "all_units": get_all_unit_list(result),
-            }
+    return jsonify({"formula": f"{result}",
+                    "units": get_unit_list(result),
+                    "all_units": get_all_unit_list(result),
+                    })
 
 
-def calc_quantity(formula: str, change_units: list[str] = []):
-    ans = Q_(formula).to_base_units()
+def calc_quantity(formula: str, change_units: list[str] = []) -> UnitRegistry.Quantity:
+    ans = ureg.Quantity(formula).to_base_units()
     if change_units:
         print("joind =", "".join(change_units))
         return ans.to("".join(change_units))
     return ans
 
 
-def get_unit_list(result):
+def get_unit_list(result: UnitRegistry.Quantity) -> list[str]:
     unit_str = f"{result.units}"
     for s in superscripts:
         unit_str = unit_str.replace(s, "")
@@ -31,7 +30,7 @@ def get_unit_list(result):
     return unit_list
 
 
-def get_all_unit_list(result):
+def get_all_unit_list(result: UnitRegistry.Quantity) -> list[str]:
     unit_str = f"{result.units}"
     unit_str = unit_str.replace("·", " · ").replace("/", " / ")
     for s in superscripts:
