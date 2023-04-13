@@ -13,7 +13,7 @@ def make_json_from_result(result):
                     })
 
 
-def calc_quantity(formula: str, change_units: list[str] = []) -> UnitRegistry.Quantity:
+def calc_quantity(formula: str, change_units: list[str] = []):
     ans = ureg.Quantity(formula).to_base_units()
     if change_units:
         print("joind =", "".join(change_units))
@@ -21,7 +21,7 @@ def calc_quantity(formula: str, change_units: list[str] = []) -> UnitRegistry.Qu
     return ans
 
 
-def get_unit_list(result: UnitRegistry.Quantity) -> list[str]:
+def get_unit_list(result) -> list[str]:
     unit_str = f"{result.units}"
     for s in superscripts:
         unit_str = unit_str.replace(s, "")
@@ -31,7 +31,7 @@ def get_unit_list(result: UnitRegistry.Quantity) -> list[str]:
     return unit_list
 
 
-def get_all_unit_list(result: UnitRegistry.Quantity) -> list[str]:
+def get_all_unit_list(result) -> list[str]:
     unit_str = f"{result.units}"
     unit_str = unit_str.replace("·", " · ").replace("/", " / ")
     for s in superscripts:

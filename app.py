@@ -10,6 +10,8 @@ app.config['JSON_AS_ASCII'] = False
 @app.route('/', methods=["GET"])
 def get_formula():
     formula = request.args.get("formula", "")
+    if formula == "":
+        return "Error : formula is empty"
     return formula
 
 
