@@ -5,18 +5,9 @@ ureg.default_format = "e~P"
 superscripts = ["⁻", "⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
 
 
-def make_json_from_result(result):
-    return jsonify({"formula": f"{result}",
-                    "units": get_unit_list(result),
-                    "all_units": get_all_unit_list(result),
-                    "error": ""
-                    })
-
-
 def calc_quantity(formula: str, change_units: list[str] = []):
     ans = ureg.Quantity(formula).to_base_units()
     if change_units:
-        print("joind =", "".join(change_units))
         return ans.to("".join(change_units))
     return ans
 
@@ -38,3 +29,12 @@ def get_all_unit_list(result) -> list[str]:
         unit_str = unit_str.replace(s, f" {s} ")
     unit_list = unit_str.split()
     return unit_list
+
+
+def make_json_from_result(formula, result):
+    return jsonify({"formula": f"{formula}",
+                    "result": f"{result}",
+                    "units": get_unit_list(result),
+                    "all_units": get_all_unit_list(result),
+                    "error": ""
+                    })
